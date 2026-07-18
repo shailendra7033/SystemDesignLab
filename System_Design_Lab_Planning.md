@@ -38,18 +38,10 @@ The URL Monitoring Platform is only the learning vehicle.
 
 ## Technology Stack
 
-| Component        | Choice                   | Rationale                                                                                     |
-| ---------------- | ------------------------ | --------------------------------------------------------------------------------------------- |
-| Language         | **Go**                   | Compiled, statically typed (familiar from C++). First-class concurrency. Language of infra.    |
-| Router           | **Chi**                  | Lightweight, idiomatic, stdlib-compatible. No framework magic.                                |
-| Database         | **PostgreSQL**           | Industry standard relational DB. Rich querying, JSONB, indexing.                              |
-| Migrations       | **golang-migrate**       | Version-controlled schema changes from Phase 1.                                               |
-| Containerization | **Docker + Compose**     | Reproducible dev environment. One command to spin up entire stack. Required for scaling phases.|
-| Cache            | **Redis**                | Introduced only in Phase 7 when we measure a real DB bottleneck.                              |
-| Message Queue    | **RabbitMQ**             | Introduced only in Phase 6 when we need to decouple workers.                                  |
-| API Docs         | **swaggo/swag**          | Auto-generates OpenAPI spec from Go annotations. Swagger UI for interactive testing.          |
-| Observability    | **Prometheus + Grafana** | Introduced in Phase 9 for metrics and dashboards.                                             |
-| Load Testing     | **k6**                   | Scriptable, generates clear reports.                                                          |
+Full tech stack with rationale is documented in
+[docs/phase-00-projectsetup.md](docs/phase-00-projectsetup.md#3-technology-decisions).
+
+**Summary:** Go · Chi · PostgreSQL · Docker · Swagger · Redis (Phase 7) · RabbitMQ (Phase 6) · Prometheus + Grafana (Phase 9) · k6 (Phase 11)
 
 ---
 
@@ -71,8 +63,8 @@ The URL Monitoring Platform is only the learning vehicle.
 
 ```
 docs/
-├── phase-00-planning.md
-├── phase-01-single-server.md
+├── phase-00-projectsetup.md          # Tech stack, project structure, dev workflow
+├── phase-01-single-server.md          # PRD, API contract, DB schema, open questions
 ├── phase-02-background-worker-scheduler.md
 ├── phase-03-notifications.md
 ├── phase-04-worker-pool.md
@@ -85,7 +77,12 @@ docs/
 ├── phase-11-performance-testing.md
 ├── phase-12-architecture-review.md
 ├── architecture/
-└── adr/
+├── adr/
+└── journal/
+
+challenges/
+├── phase-00-challenge.md              # Planning challenges (completed)
+└── phase-01-challenge.md              # MVP design challenges (active)
 ```
 
 ---

@@ -1,234 +1,124 @@
-# Phase 0 Challenge — Planning & Decisions
+# Phase 0 Challenge — Planning & Environment Setup
 
-> **Rule:** Do NOT look at `docs/phase-00-planning.md` until you've
-> attempted every section below. That file is the "reference answer" —
-> compare your thinking against it AFTER you've done the work.
-
----
-
-## How This Works
-
-Each section gives you a **challenge** and **hints**. You write your
-answers below each challenge. When you're done, share your answers
-and we'll review together — mistakes are where the real learning happens.
+> **Status:** Completed (2026-07-18)
+>
+> This phase was finalized during initial planning. The challenge is
+> documented here so the learning loop is consistent across all phases.
 
 ---
 
-## Challenge 1: Define the Product
+## Challenge 1: Why This Project?
 
-You're building a URL Monitoring Platform. Before writing any code,
-you need to know exactly what you're building.
+Before writing any code, you need to justify the project choice itself.
 
 **Questions to answer:**
 
-- Who is this product for? (think about the user persona)
-- What are the absolute minimum features needed for a usable v1?
-- For each feature, assign a priority: P0 (must have) or P1 (nice to have)
-- What is explicitly OUT of scope for v1? (this is just as important)
-- What non-functional requirements matter? (response time? availability? data retention?)
-
-**Hint:** A common mistake is making the MVP too big. If you can't
-build it in a week, it's too much.
-
-**Your Answer:**
-
-```
-(write here)
-```
+- Why is a URL Monitoring Platform a good learning vehicle for system design?
+- What system design concepts will naturally emerge as this project grows?
+  (list at least 5)
+- Why is the product intentionally kept simple?
 
 ---
 
-## Challenge 2: Design the API
+## Challenge 2: Monolith or Microservices?
 
-You need REST endpoints for your MVP features. Think about:
+You haven't written any code yet, but you already need to make this call.
 
 **Questions to answer:**
 
-- What resources exist in your system? (nouns, not verbs)
-- What operations does each resource need?
-- How will you structure your URL paths?
-- What HTTP methods map to what operations?
-- What status codes should each endpoint return?
-- How will you handle errors? (think about a consistent format)
-- How will you handle pagination for list endpoints?
-- Should your API be versioned? Why or why not?
+- Should your Phase 1 be a monolith or microservices? Why?
+- At what point would you consider breaking the monolith apart?
+- What are the trade-offs of starting with microservices on day one?
 
-**Hint:** Think about what a client needs. If you were writing curl
-commands to test your API, what would feel natural?
-
-**Your Answer:**
-
-```
-(write here)
-```
+**Hint:** Think about your team size (1 person), your experience with
+distributed systems, and the operational overhead of multiple services.
 
 ---
 
-## Challenge 3: Design the Database
+## Challenge 3: Pick a Language
 
-Your data needs to live somewhere. Think about the entities and their
-relationships.
+You need to choose a language for the entire project.
 
 **Questions to answer:**
 
-- What tables do you need? (map from your resources)
-- What columns does each table need? Think about:
-  - Primary keys — what type? auto-increment integer or UUID? Why?
-  - Foreign keys — what references what?
-  - Timestamps — which ones matter?
-  - Constraints — what should be unique? what can't be null?
-  - Defaults — what sensible defaults can you set?
-- What indexes do you need? (think about your query patterns)
-  - Which columns will you filter by?
-  - Which columns will you sort by?
-  - Any composite indexes needed?
-- What happens when a user is deleted? What about their monitors?
-
-**Hint:** Draw the ER diagram on paper first. Write the actual
-CREATE TABLE statements with constraints.
-
-**Your Answer:**
-
-```sql
-(write here)
-```
+- What are your options? (list 3-4 realistic choices)
+- For each, what are the pros and cons for THIS project?
+- Which one maximizes YOUR learning given your current skills?
+- Will this choice still work when you add concurrency (Phase 4),
+  queues (Phase 6), and horizontal scaling (Phase 10)?
 
 ---
 
-## Challenge 4: Choose Your Tech Stack
+## Challenge 4: Why Docker from Day One?
 
-For each component below, pick a specific tool/library and write
-**why** you chose it. "Because it's popular" is not a valid reason.
-
-**Decisions to make:**
-
-- HTTP router/framework — Chi, Gin, Echo, Fiber, or stdlib? Why?
-- Database driver — pgx, database/sql, GORM, sqlx? Why?
-- Migration tool — golang-migrate, goose, atlas? Why?
-- Authentication — JWT, sessions, OAuth? Why? What library?
-- Password hashing — what algorithm? Why?
-- Configuration — how will your app read config? hardcoded? env vars? config file?
-- UUID generation — who generates IDs? the app or the database? Why?
-- Input validation — framework or custom? Why?
-
-**Hint:** For each choice, think about what happens in Phase 5, 10, 12.
-Will your choice still work at scale?
-
-**Your Answer:**
-
-```
-(write here)
-```
-
----
-
-## Challenge 5: Design the Project Structure
-
-How will you organize your Go code? Think about:
+Your plan says "containerize from day one." Justify it.
 
 **Questions to answer:**
 
-- Where does your `main.go` live?
-- How do you separate HTTP handlers from business logic from database access?
-- What is "layered architecture"? Draw the layers and data flow.
-- Where do your database models (structs) live?
-- Where do migration SQL files live?
-- If someone new joins the project, can they understand the structure in 5 minutes?
-
-**Hint:** Look up "standard Go project layout" but don't blindly copy it.
-Think about WHY each folder exists. What problem does `internal/` solve
-that a regular folder doesn't?
-
-**Your Answer:**
-
-```
-(write here)
-```
+- What specific problems does Docker solve in Phase 0?
+- What would go wrong WITHOUT Docker when you add PostgreSQL, Redis,
+  RabbitMQ in later phases?
+- What is Docker Compose and why do you need it?
+- What is the difference between a Dockerfile and docker-compose.yml?
 
 ---
 
-## Challenge 6: Docker — Why?
+## Challenge 5: Repository Structure
 
-Don't just use Docker because everyone does. Answer these:
+How should your project be organized before writing any code?
 
 **Questions to answer:**
 
-- What problem does Docker solve for this project specifically?
-- What goes in your Dockerfile? What is a multi-stage build and why use one?
-- What goes in docker-compose.yml? What services do you need for Phase 1?
-- What ports need to be exposed?
-- How does your Go app connect to PostgreSQL inside Docker?
-  (think about networking, hostnames, and environment variables)
-- What is the difference between building your Go binary locally vs inside Docker?
-
-**Hint:** Think about what happens when you share this project with
-someone on a Mac while you're on Windows.
-
-**Your Answer:**
-
-```
-(write here)
-```
+- What folders do you need from day one?
+- What is the purpose of a `docs/` folder with phase documents?
+- Why keep an `adr/` folder separate from phase docs?
+- What is the purpose of a `challenges/` folder?
+- What belongs in `.gitignore` for a Go + Docker project?
 
 ---
 
-## Challenge 7: Authentication Flow
+## Challenge 6: Development Workflow
 
-You need user registration and login. Think through the full flow:
+How will you build, run, and test your project daily?
 
 **Questions to answer:**
 
-- What happens step-by-step when a user registers? (from HTTP request to database)
-- What happens step-by-step when a user logs in?
-- How does the server know who is making a request after login?
-- What is a JWT? What goes inside it? (claims)
-- Where does the client send the JWT on subsequent requests?
-- What happens when the JWT expires?
-- How do you hash passwords? Why can't you just encrypt them?
-- What is bcrypt and why is it preferred over SHA-256 for passwords?
-
-**Hint:** Draw the sequence diagram on paper:
-Client → Server → Database → Server → Client
-
-**Your Answer:**
-
-```
-(write here)
-```
+- What repetitive commands will you run every day?
+- How can you simplify them? (think Makefile)
+- What should `make run` do vs `go run`?
+- What does a basic CI pipeline need to check? (lint? test? build?)
 
 ---
 
-## Challenge 8: Error Handling Strategy
+## Challenge 7: Documentation Strategy
 
-Every API needs to handle errors consistently. Think about:
+You plan to document everything. But what, where, and how?
 
 **Questions to answer:**
 
-- What types of errors can occur? (validation, not found, unauthorized, internal, etc.)
-- Should error responses have a consistent structure? What fields?
-- Should your API expose internal error details to the client? Why not?
-- What HTTP status codes map to what error types?
-- What should your server do when an unexpected panic occurs?
-
-**Hint:** Think about what a frontend developer (or your future self using curl)
-needs to see when something goes wrong.
-
-**Your Answer:**
-
-```
-(write here)
-```
+- What is an ADR and when do you write one?
+- What is the difference between an ADR and an architecture diagram?
+- What should an engineering journal capture that code comments can't?
+- What metrics should you track from Phase 1 onward?
 
 ---
 
-## When You're Done
+## Decisions Made
 
-1. Share your answers with me
-2. I'll review each section — point out mistakes, gaps, and things you nailed
-3. We'll discuss trade-offs you might have missed
-4. THEN we create the actual documentation and code together
+These were finalized during planning:
 
-**The goal is not to get the "right" answer. The goal is to think
-through the problem yourself, make decisions, and understand the
-trade-offs.** Wrong answers you've thought about teach more than
-right answers you've copied.
+| Decision         | Choice            | Documented In                  |
+| ---------------- | ----------------- | ------------------------------ |
+| Language          | Go                | System_Design_Lab_Planning.md  |
+| Router            | Chi v5            | docs/phase-00-projectsetup.md  |
+| Database          | PostgreSQL 16     | docs/phase-00-projectsetup.md  |
+| Containerization  | Docker + Compose  | docs/phase-00-projectsetup.md  |
+| Architecture      | Monolith          | Roadmap (evolves over phases)  |
+| API Docs          | Swagger (swaggo)  | docs/phase-00-projectsetup.md  |
+| Migrations        | golang-migrate    | docs/phase-00-projectsetup.md  |
+
+---
+
+## Next
+
+Move to [Phase 1 Challenge](phase-01-challenge.md) — Design the MVP.

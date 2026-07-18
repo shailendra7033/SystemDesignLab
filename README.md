@@ -55,4 +55,4 @@ The `docs/` folder contains reference answers — don't look until you've attemp
 
 ---
 
-📄 [Planning](System_Design_Lab_Planning.md) · 📄 [Roadmap](System_Design_Lab_Roadmap.md) · 📄 [Current Challenge](challenges/phase-00-challenge.md)
+📄 [Planning](System_Design_Lab_Planning.md) · 📄 [Roadmap](System_Design_Lab_Roadmap.md) · 📄 [Project Setup](docs/phase-00-projectsetup.md) · 📄 [Current Challenge](challenges/phase-01-challenge.md)
