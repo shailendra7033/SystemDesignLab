@@ -23,10 +23,9 @@ evolving the architecture as new problems appear.
 - Technology Stack finalized (Go + Chi + PostgreSQL)
 - Repository structure with Go modules
 - Dockerfile + docker-compose.yml (Go app + PostgreSQL)
-- Makefile for common commands (build, run, test, migrate, swagger)
+- Makefile for common commands (build, run, test, migrate)
 - CI pipeline (GitHub Actions: lint + test)
-- `.env.example` and `.gitignore` for configuration
-- Swagger/OpenAPI setup (swaggo/swag + http-swagger)
+- `.env.example` for configuration
 
 **Learn**
 
@@ -55,8 +54,6 @@ evolving the architecture as new problems appear.
 - Delete Monitor
 - Manual Health Check (hit a URL and return status)
 - View Check History for a Monitor
-- Health endpoint (`/health`)
-- Swagger UI at `/swagger/` for interactive API testing
 
 **API Contract (v1)**
 
@@ -72,9 +69,6 @@ DELETE /api/v1/monitors/{id}
 
 POST   /api/v1/monitors/{id}/check
 GET    /api/v1/monitors/{id}/history
-
-GET    /health
-GET    /swagger/*
 ```
 
 **Database Schema (Initial)**
@@ -127,7 +121,6 @@ system-design-lab/
 ├── migrations/                  # SQL migration files
 ├── docs/                        # Phase docs + ADRs
 │   ├── adr/
-│   ├── architecture/
 │   └── journal/
 ├── docker-compose.yml
 ├── Dockerfile

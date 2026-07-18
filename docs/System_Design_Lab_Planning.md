@@ -47,7 +47,6 @@ The URL Monitoring Platform is only the learning vehicle.
 | Containerization | **Docker + Compose**     | Reproducible dev environment. One command to spin up entire stack. Required for scaling phases.|
 | Cache            | **Redis**                | Introduced only in Phase 7 when we measure a real DB bottleneck.                              |
 | Message Queue    | **RabbitMQ**             | Introduced only in Phase 6 when we need to decouple workers.                                  |
-| API Docs         | **swaggo/swag**          | Auto-generates OpenAPI spec from Go annotations. Swagger UI for interactive testing.          |
 | Observability    | **Prometheus + Grafana** | Introduced in Phase 9 for metrics and dashboards.                                             |
 | Load Testing     | **k6**                   | Scriptable, generates clear reports.                                                          |
 
