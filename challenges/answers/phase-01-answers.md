@@ -9,7 +9,7 @@
 
 ## Challenge 1: Define the Product
 
-**Date:** 2026-07-18
+**Date:** 2026-07-18 Author : "Shailendra" My answer
 
 - product is for anyone have deployed his solution and wanted to monitor the website, or api url or anything
 - customer on-boarding (login/signup)
@@ -39,7 +39,7 @@
 
 ## Challenge 2: Design the API
 
-**Date:** 2026-07-18
+**Date:** 2026-07-18, Author : "Shailendra" My answer
 
 - POST /api/v1/login    200 Ok to login with credentials
 - POST /api/v1/register 201 Ok to register with credentials
@@ -78,7 +78,7 @@ flowchart LR
 
 ## Challenge 3: Design the Database
 
-**Date:**
+**Date:** Author : "Shailendra" My answer
 
 ```
 the main entiites must have is user/customers and urlMonitor.
@@ -120,7 +120,7 @@ UrlMonitor:
 
 ## Challenge 4: Choose Your Tech Stack
 
-**Date:**
+**Date:** Author : "Shailendra" My answer
 
 ```
 we are already done, we will use go, for API design we will use openapi/swagger  template and write best specs
@@ -143,7 +143,7 @@ we are already done, we will use go, for API design we will use openapi/swagger 
 **Date:**
 
 ```
-(write here)
+(write your answer here)
 ```
 
 ### What is wrong

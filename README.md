@@ -55,4 +55,21 @@ The `docs/` folder contains reference answers — don't look until you've attemp
 
 ---
 
+## Learning Resources
+
+Use this section to keep links for articles, docs, and tools referenced during the lab.
+
+### Articles and Docs
+
+- Database indexing overview: https://medium.com/@akashsdas_dev/database-indexing-e10362624ed3
+- DB diagram tool: https://dbdiagram.io/
+- OpenAPI tags guide: https://learn.openapis.org/specification/tags.html
+
+### VS Code Extensions Used
+
+- OpenAPI by 42Crunch
+- DBML
+
+---
+
 📄 [Planning](System_Design_Lab_Planning.md) · 📄 [Roadmap](System_Design_Lab_Roadmap.md) · 📄 [Project Setup](docs/phase-00-projectsetup.md) · 📄 [Current Challenge](challenges/phase-01-challenge.md) · 📄 [Your Answers](challenges/answers/)
