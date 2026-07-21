@@ -1,0 +1,549 @@
+openapi: 3.1.0
+info:
+  title: URL Monitor API
+  description: API for URL monitoring, manual checks, and auth.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development
+
+tags:
+  - name: Health
+    description: Service health endpoints
+  - name: Authentication
+    description: User registration and login endpoints
+  - name: Monitors
+    description: CRUD endpoints for monitors
+  - name: Checks
+    description: Manual checks and check history
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Check API health
+      operationId: getHealth
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /api/v1/auth/register:
+    post:
+      tags: [Authentication]
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /api/v1/auth/login:
+    post:
+      tags: [Authentication]
+      summary: Authenticate user and return JWT
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/monitors:
+    get:
+      tags: [Monitors]
+      summary: List monitors for authenticated user
+      operationId: listMonitors
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: Paginated monitor list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Monitors]
+      summary: Create monitor
+      operationId: createMonitor
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMonitorRequest'
+      responses:
+        '201':
+          description: Monitor created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/monitors/{id}:
+    get:
+      tags: [Monitors]
+      summary: Get monitor details
+      operationId: getMonitor
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/MonitorId'
+      responses:
+        '200':
+          description: Monitor details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/MonitorNotFound'
+    put:
+      tags: [Monitors]
+      summary: Update monitor
+      operationId: updateMonitor
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/MonitorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMonitorRequest'
+      responses:
+        '200':
+          description: Monitor updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/MonitorNotFound'
+    delete:
+      tags: [Monitors]
+      summary: Delete monitor
+      operationId: deleteMonitor
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/MonitorId'
+      responses:
+        '204':
+          description: Monitor deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/MonitorNotFound'
+
+  /api/v1/monitors/{id}/check:
+    post:
+      tags: [Checks]
+      summary: Trigger manual URL check
+      operationId: checkMonitor
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/MonitorId'
+      responses:
+        '200':
+          description: Manual check completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckResultResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/MonitorNotFound'
+
+  /api/v1/monitors/{id}/history:
+    get:
+      tags: [Checks]
+      summary: Get paginated check history for a monitor
+      operationId: getMonitorHistory
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/MonitorId'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: Paginated check history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckHistoryResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/MonitorNotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    MonitorId:
+      name: id
+      in: path
+      required: true
+      description: Monitor UUID
+      schema:
+        type: string
+        format: uuid
+    Page:
+      name: page
+      in: query
+      required: false
+      description: Page number (1-based)
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPage:
+      name: per_page
+      in: query
+      required: false
+      description: Items per page
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  responses:
+    BadRequest:
+      description: Invalid request payload or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: VALIDATION_ERROR
+              message: Invalid input payload
+    Unauthorized:
+      description: Missing or invalid JWT
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Invalid or missing token
+    Conflict:
+      description: Resource conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: EMAIL_ALREADY_EXISTS
+              message: Email is already registered
+    MonitorNotFound:
+      description: Monitor not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: MONITOR_NOT_FOUND
+              message: Monitor with id abc-123 does not exist
+
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          example: healthy
+
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+
+    Pagination:
+      type: object
+      required: [page, per_page, total]
+      properties:
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 20
+        total:
+          type: integer
+          example: 42
+
+    User:
+      type: object
+      required: [id, email, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    RegisterRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    LoginResponse:
+      type: object
+      required: [token, expires_in]
+      properties:
+        token:
+          type: string
+          description: JWT access token
+        expires_in:
+          type: integer
+          description: Expiry in seconds
+          example: 86400
+
+    UserResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/User'
+
+    Monitor:
+      type: object
+      required:
+        - id
+        - user_id
+        - url
+        - name
+        - check_interval_s
+        - expected_status
+        - is_active
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+        name:
+          type: string
+        check_interval_s:
+          type: integer
+          minimum: 1
+          example: 300
+        expected_status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          example: 200
+        is_active:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    CreateMonitorRequest:
+      type: object
+      required: [url, name]
+      properties:
+        url:
+          type: string
+          format: uri
+        name:
+          type: string
+        check_interval_s:
+          type: integer
+          minimum: 1
+          default: 300
+        expected_status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          default: 200
+
+    UpdateMonitorRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        name:
+          type: string
+        check_interval_s:
+          type: integer
+          minimum: 1
+        expected_status:
+          type: integer
+          minimum: 100
+          maximum: 599
+        is_active:
+          type: boolean
+
+    MonitorResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/Monitor'
+
+    MonitorListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Monitor'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    CheckResult:
+      type: object
+      required:
+        - id
+        - monitor_id
+        - response_time_ms
+        - is_up
+        - checked_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        monitor_id:
+          type: string
+          format: uuid
+        status_code:
+          type: integer
+          nullable: true
+          minimum: 100
+          maximum: 599
+        response_time_ms:
+          type: integer
+          minimum: 0
+          example: 124
+        is_up:
+          type: boolean
+        error:
+          type: string
+          nullable: true
+        checked_at:
+          type: string
+          format: date-time
+
+    CheckResultResponse:
+      type: object
+      required: [data]
+      properties:
+        data:
+          $ref: '#/components/schemas/CheckResult'
+
+    CheckHistoryResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckResult'
+        pagination:
+          $ref: '#/components/schemas/Pagination'

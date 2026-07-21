@@ -1,0 +1,45 @@
+Project url_monitor {
+    database_type: 'PostgreSQL'
+    Note: 'Phase 1 single-server MVP schema'
+}
+
+Table users {
+    id uuid [pk, not null, default: `gen_random_uuid()`]
+    email text [not null, unique]
+    password_hash text [not null]
+    created_at timestamptz [not null, default: `now()`]
+    updated_at timestamptz [not null, default: `now()`]
+}
+
+Table monitors {
+    id uuid [pk, not null, default: `gen_random_uuid()`]
+    user_id uuid [not null]
+    url text [not null]
+    name text [not null]
+    check_interval_s int [not null, default: 300]
+    expected_status int [not null, default: 200]
+    is_active boolean [not null, default: true]
+    created_at timestamptz [not null, default: `now()`]
+    updated_at timestamptz [not null, default: `now()`]
+
+    Indexes {
+        user_id [name: 'idx_monitors_user_id']
+    }
+}
+
+Table check_results {
+    id uuid [pk, not null, default: `gen_random_uuid()`]
+    monitor_id uuid [not null]
+    status_code int
+    response_time_ms int [not null]
+    is_up boolean [not null]
+    error text
+    checked_at timestamptz [not null, default: `now()`]
+
+    Indexes {
+        (monitor_id, checked_at) [name: 'idx_check_results_monitor_checked']
+    }
+}
+
+Ref: monitors.user_id > users.id [delete: cascade]
+Ref: check_results.monitor_id > monitors.id [delete: cascade]
