@@ -39,7 +39,7 @@ The URL Monitoring Platform is only the learning vehicle.
 ## Technology Stack
 
 Full tech stack with rationale is documented in
-[docs/phase-00-projectsetup.md](docs/phase-00-projectsetup.md#3-technology-decisions).
+[docs/phase-00-projectsetup.md](docs/phase-00-projectsetup.md#1-technology-decisions).
 
 **Summary:** Go · Chi · PostgreSQL · Docker · Swagger · Redis (Phase 7) · RabbitMQ (Phase 6) · Prometheus + Grafana (Phase 9) · k6 (Phase 11)
 
@@ -82,7 +82,15 @@ docs/
 
 challenges/
 ├── phase-00-challenge.md              # Planning challenges (completed)
-└── phase-01-challenge.md              # MVP design challenges (active)
+├── phase-01-challenge.md              # MVP design challenges (active)
+└── answers/                           # Your answers (separate from templates)
+    └── phase-XX-answers.md
+
+prompts/
+├── sdl-start-challenge.prompt.md      # Begin next phase challenge
+├── sdl-review-answers.prompt.md       # Get feedback on your answers
+├── sdl-start-building.prompt.md       # Start coding after review
+└── sdl-finish-phase.prompt.md         # Wrap up phase, create next challenge
 ```
 
 ---

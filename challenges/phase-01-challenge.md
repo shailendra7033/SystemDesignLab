@@ -8,9 +8,10 @@
 
 ## How This Works
 
-Each section gives you a **challenge** and **hints**. You write your
-answers below each challenge. When you're done, share your answers
-and we'll review together — mistakes are where the real learning happens.
+Each section gives you a **challenge** and **hints**.
+Write your answers in [answers/phase-01-answers.md](answers/phase-01-answers.md).
+When you're done, share your answers and we'll review together —
+mistakes are where the real learning happens.
 
 ---
 
@@ -29,12 +30,6 @@ you need to know exactly what you're building.
 
 **Hint:** A common mistake is making the MVP too big. If you can't
 build it in a week, it's too much.
-
-**Your Answer:**
-
-```
-(write here)
-```
 
 ---
 
@@ -55,12 +50,6 @@ You need REST endpoints for your MVP features. Think about:
 
 **Hint:** Think about what a client needs. If you were writing curl
 commands to test your API, what would feel natural?
-
-**Your Answer:**
-
-```
-(write here)
-```
 
 ---
 
@@ -87,12 +76,6 @@ relationships.
 **Hint:** Draw the ER diagram on paper first. Write the actual
 CREATE TABLE statements with constraints.
 
-**Your Answer:**
-
-```sql
-(write here)
-```
-
 ---
 
 ## Challenge 4: Choose Your Tech Stack
@@ -114,12 +97,6 @@ For each component below, pick a specific tool/library and write
 **Hint:** For each choice, think about what happens in Phase 5, 10, 12.
 Will your choice still work at scale?
 
-**Your Answer:**
-
-```
-(write here)
-```
-
 ---
 
 ## Challenge 5: Design the Project Structure
@@ -139,12 +116,6 @@ How will you organize your Go code? Think about:
 Think about WHY each folder exists. What problem does `internal/` solve
 that a regular folder doesn't?
 
-**Your Answer:**
-
-```
-(write here)
-```
-
 ---
 
 ## Challenge 6: Docker — Why?
@@ -163,12 +134,6 @@ Don't just use Docker because everyone does. Answer these:
 
 **Hint:** Think about what happens when you share this project with
 someone on a Mac while you're on Windows.
-
-**Your Answer:**
-
-```
-(write here)
-```
 
 ---
 
@@ -190,12 +155,6 @@ You need user registration and login. Think through the full flow:
 **Hint:** Draw the sequence diagram on paper:
 Client → Server → Database → Server → Client
 
-**Your Answer:**
-
-```
-(write here)
-```
-
 ---
 
 ## Challenge 8: Error Handling Strategy
@@ -213,20 +172,15 @@ Every API needs to handle errors consistently. Think about:
 **Hint:** Think about what a frontend developer (or your future self using curl)
 needs to see when something goes wrong.
 
-**Your Answer:**
-
-```
-(write here)
-```
-
 ---
 
 ## When You're Done
 
-1. Share your answers with me
-2. I'll review each section — point out mistakes, gaps, and things you nailed
-3. We'll discuss trade-offs you might have missed
-4. THEN we create the actual documentation and code together
+1. Write your answers in [answers/phase-01-answers.md](answers/phase-01-answers.md)
+2. Share your answers with me (use the `sdl-review-answers` prompt)
+3. I'll review each section — point out mistakes, gaps, and things you nailed
+4. We'll discuss trade-offs you might have missed
+5. THEN we create the actual documentation and code together
 
 **The goal is not to get the "right" answer. The goal is to think
 through the problem yourself, make decisions, and understand the

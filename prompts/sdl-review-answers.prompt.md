@@ -2,7 +2,7 @@
 description: Review my challenge answers for the current System Design Lab phase
 ---
 
-I've completed my answers for the current active challenge in the System Design Lab. Read the active challenge file from challenges/ and review my answers.
+I've completed my answers for the current active challenge in the System Design Lab. Read the active challenge file from challenges/ to see the questions, then read the matching answer file from challenges/answers/ to see my responses.
 
 For each challenge section:
 1. **What I nailed** — correct thinking, good reasoning

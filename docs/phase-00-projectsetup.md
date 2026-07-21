@@ -76,6 +76,11 @@ system-design-lab/
 │   ├── architecture/
 │   ├── adr/
 │   └── journal/
+├── challenges/
+│   ├── phase-XX-challenge.md          # Question templates (read-only)
+│   └── answers/
+│       └── phase-XX-answers.md        # Your answers go here
+├── prompts/                           # Reusable workflow prompts
 ├── docker-compose.yml
 ├── Dockerfile
 ├── Makefile

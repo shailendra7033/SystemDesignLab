@@ -9,6 +9,6 @@ I think I'm done with the current phase. Do a thorough review:
 3. **ADR check** — Were any significant decisions made during this phase that aren't documented as ADRs? If so, let's write them.
 4. **Challenge status** — Update the challenge file status to "Completed" with today's date.
 5. **What's next** — Preview the next phase from the Roadmap. What system design concepts are coming? What should I read or think about before starting?
-6. **Create next challenge** — If challenges/phase-XX-challenge.md doesn't exist for the next phase, create it following the same format (challenges with questions, hints, empty answer blocks, reference doc link).
+6. **Create next challenge** — If challenges/phase-XX-challenge.md doesn't exist for the next phase, create it following the same format (challenges with questions and hints, NO inline answer blocks — answers go in a separate file). Also create the matching challenges/answers/phase-XX-answers.md with sections mirroring each challenge and `(write here)` placeholders.
 
 Finally, tell me to commit this phase's work before moving on.
